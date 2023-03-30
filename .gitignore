@@ -1,13 +1,10 @@
 # Files to be ignored in github
-# No files in the project folder .../.ssh should be commited
-ansible/learning_ansible/deploy_home_infra/files/.ssh/
 id_rsa.pub
 id_rsa
 id_dsa.pub
 id_dsa
 *.pem
 *.key
-#terraform/demo_terraform_aws_instance_ACG/.terraform/**
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
