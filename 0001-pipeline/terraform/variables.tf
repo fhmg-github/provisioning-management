@@ -1,5 +1,5 @@
 variable "ami_id" {
-  type = string
+  type    = string
   default = "ami-00756a2b7a21e2bd3" # us-west-1 ami-id
 }
 variable "free_tier" {
@@ -13,6 +13,6 @@ variable "access_key" {
 }
 
 variable "az" {
-  type = string
+  type    = string
   default = "us-west-1a"
 }
