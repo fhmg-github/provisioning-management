@@ -18,7 +18,7 @@ variable "az" {
 }
 
 variable "global_tags" {
-  type = map(any)
+  type = map(object)
   default = {
     ManagedBy   = "Terraform"
     Environment = "DEV"
