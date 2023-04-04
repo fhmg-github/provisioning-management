@@ -62,7 +62,12 @@ resource "aws_security_group" "security-group-0" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
   }
-  tags = merge(var.global_tags, { Name = "security-group-0" }, { CreatedDate = timestamp() })
+  tags = merge(
+      var.global_tags, 
+      { 
+         Name = "security-group-0", 
+         CreatedDate = timestamp()
+      })
 }
 
 # ELASTICSEARCH SG
