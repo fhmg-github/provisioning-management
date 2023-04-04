@@ -16,3 +16,12 @@ variable "az" {
   type    = string
   default = "us-west-1a"
 }
+
+variable "global_tags" {
+  type = map(any)
+  default = {
+    ManagedBy   = "Terraform"
+    Environment = "DEV"
+    Project     = "0001-pipeline"
+  }
+}

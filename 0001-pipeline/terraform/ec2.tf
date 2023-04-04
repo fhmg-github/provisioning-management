@@ -1,5 +1,11 @@
 # EC2 instances
 
+locals {
+  timestamp_tags = {
+    CreatedDate   = timestamp()
+    ExprationDate = timeadd(timestamp(), "120h")
+  }
+}
 resource "aws_instance" "bastion_host" {
   ami                         = var.ami_id
   instance_type               = var.free_tier
@@ -8,12 +14,7 @@ resource "aws_instance" "bastion_host" {
   vpc_security_group_ids      = ["${aws_security_group.security-group-0.id}"]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = {
-    Name                 = "Bastion"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-    Description          = "Bastion node"
-  }
+  tags = merge(var.global_tags, local.timestamp_tags, { Name = "bastion_host" })
 }
 
 resource "aws_instance" "maven" {
@@ -24,13 +25,7 @@ resource "aws_instance" "maven" {
   vpc_security_group_ids      = ["${aws_security_group.security-group-0.id}"]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = {
-    Name                 = "Maven"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-    Description          = "Maven build tool"
-
-  }
+  tags = merge(var.global_tags, local.timestamp_tags, { Name = "maven" })
 }
 
 resource "aws_instance" "Jenkins_master" {
@@ -41,12 +36,7 @@ resource "aws_instance" "Jenkins_master" {
   vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = {
-    Name                 = "jenkins-master"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-    Description          = "Jenkins master node"
-  }
+  tags = merge(var.global_tags, local.timestamp_tags, { Name = "jenkins_master" })
 }
 
 resource "aws_instance" "JMeter" {
@@ -57,12 +47,7 @@ resource "aws_instance" "JMeter" {
   vpc_security_group_ids      = ["${aws_security_group.security-group-0.id}"]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = {
-    Name                 = "JMeter"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-    Description          = "JMeter node"
-  }
+  tags = merge(var.global_tags, local.timestamp_tags, { Name = "jmeter" })
 }
 
 resource "aws_instance" "elastic_master" {
@@ -73,12 +58,7 @@ resource "aws_instance" "elastic_master" {
   vpc_security_group_ids      = ["${aws_security_group.elastic-sg.id}, ${aws_security_group.security-group-0.id}"]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = {
-    Name                 = "elastic-master"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-    Description          = "elastic_master node"
-  }
+  tags = merge(var.global_tags, local.timestamp_tags, { Name = "elastic_master" })
 }
 
 resource "aws_instance" "kibana" {
@@ -89,12 +69,7 @@ resource "aws_instance" "kibana" {
   vpc_security_group_ids      = ["${aws_security_group.kibana-sg.id}"]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = {
-    Name                 = "kibana"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-    Description          = "kibana node"
-  }
+  tags = merge(var.global_tags, local.timestamp_tags, { Name = "kibana" })
 }
 
 resource "aws_instance" "logstash" {
@@ -105,12 +80,7 @@ resource "aws_instance" "logstash" {
   vpc_security_group_ids      = ["${aws_security_group.security-group-0.id}"]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = {
-    Name                 = "logstash"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-    Description          = "logstash node"
-  }
+  tags = merge(var.global_tags, local.timestamp_tags, { Name = "logstash" })
 }
 
 resource "aws_instance" "jfrog_oss" {
@@ -121,10 +91,5 @@ resource "aws_instance" "jfrog_oss" {
   vpc_security_group_ids      = ["${aws_security_group.security-group-0.id}"]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = {
-    Name                 = "jfrog_oss"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-    Description          = "jfrog_oss node"
-  }
+  tags = merge(var.global_tags, local.timestamp_tags, { Name = "jfrog" })
 }

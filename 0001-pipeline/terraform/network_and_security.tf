@@ -4,11 +4,7 @@ resource "aws_vpc" "vpc-0" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support   = true
-  tags = {
-    Name                 = "vpc-0"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-  }
+  tags                 = merge(var.global_tags, { Name = "vpc-0" }, { CreatedDate = timestamp() })
 }
 
 # SUBNET
@@ -16,20 +12,14 @@ resource "aws_subnet" "subnet-0" {
   cidr_block        = cidrsubnet(aws_vpc.vpc-0.cidr_block, 3, 1)
   vpc_id            = aws_vpc.vpc-0.id
   availability_zone = var.az
-  tags = {
-    Name                 = "subnet-0"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-  }
+  tags              = merge(var.global_tags, { Name = "subnet-0" }, { CreatedDate = timestamp() })
 }
 
 # INTERNET GATEWAY
 
 resource "aws_internet_gateway" "internet-gateway-0" {
   vpc_id = aws_vpc.vpc-0.id
-  tags = {
-    Name = "internet_gateway_0"
-  }
+  tags   = merge(var.global_tags, { Name = "internet-gateway-0" }, { CreatedDate = timestamp() })
 }
 
 # ROUTING TABLE
@@ -42,10 +32,11 @@ resource "aws_route_table" "route-table-0" {
     gateway_id = aws_internet_gateway.internet-gateway-0.id
   }
 
-  tags = {
-    Name = "rounting_table_0"
-  }
+  tags = merge(var.global_tags, { Name = "subnet-0" }, { CreatedDate = timestamp() })
 }
+
+# ROUTING TABLE ASSOCIATION
+
 resource "aws_route_table_association" "subnet-association-0" {
   subnet_id      = aws_subnet.subnet-0.id
   route_table_id = aws_route_table.route-table-0.id
@@ -71,12 +62,9 @@ resource "aws_security_group" "security-group-0" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
   }
-  tags = {
-    Name                 = "security-group-0"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-  }
+  tags = merge(var.global_tags, { Name = "security-group-0" }, { CreatedDate = timestamp() })
 }
+
 # ELASTICSEARCH SG
 
 resource "aws_security_group" "elastic-sg" {
@@ -84,11 +72,12 @@ resource "aws_security_group" "elastic-sg" {
   vpc_id = aws_vpc.vpc-0.id
 
   ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.security-group-0.id}"]
-    description     = "Allow SSH access only from the security-group-0 where the bastion host is"
+    # from_port       = 22
+    # to_port         = 22
+    # protocol        = "tcp"
+    # security_groups = ["${aws_security_group.security-group-0.id}"]
+    # var.ingress_ssh_bastion
+    description = "Allow SSH access only from the security-group-0 where the bastion host is"
   }
 
   ingress {
@@ -114,11 +103,7 @@ resource "aws_security_group" "elastic-sg" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
   }
-  tags = {
-    Name                 = "elastic-sg"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-  }
+  tags = merge(var.global_tags, { Name = "elastic-sg" }, { CreatedDate = timestamp() })
 }
 
 # KIBANA SG
@@ -157,10 +142,6 @@ resource "aws_security_group" "kibana-sg" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
   }
-  tags = {
-    Name                 = "kibana-sg"
-    Created_by_Terraform = "True"
-    Environment          = "DEV"
-  }
+  tags = merge(var.global_tags, { Name = "kibana-sg" }, { CreatedDate = timestamp() })
 
 }
