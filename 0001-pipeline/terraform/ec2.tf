@@ -11,10 +11,14 @@ resource "aws_instance" "bastion_host" {
   instance_type               = var.free_tier
   key_name                    = var.access_key
   associate_public_ip_address = true
-  vpc_security_group_ids      = ["${aws_security_group.security-group-0.id}"]
+  vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = merge(var.global_tags, local.timestamp_tags, { Name = "bastion_host" })
+  tags = merge(
+    var.env_tags.default_tags, local.timestamp_tags,
+    {
+      Name = "bastion_host"
+  })
 }
 
 resource "aws_instance" "maven" {
@@ -22,10 +26,14 @@ resource "aws_instance" "maven" {
   instance_type               = var.free_tier
   key_name                    = var.access_key
   associate_public_ip_address = true
-  vpc_security_group_ids      = ["${aws_security_group.security-group-0.id}"]
+  vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = merge(var.global_tags, local.timestamp_tags, { Name = "maven" })
+  tags = merge(
+    var.env_tags.default_tags, local.timestamp_tags,
+    {
+      Name = "maven"
+  })
 }
 
 resource "aws_instance" "Jenkins_master" {
@@ -36,7 +44,11 @@ resource "aws_instance" "Jenkins_master" {
   vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = merge(var.global_tags, local.timestamp_tags, { Name = "jenkins_master" })
+  tags = merge(
+    var.env_tags.default_tags, local.timestamp_tags,
+    {
+      Name = "jenkins_master"
+  })
 }
 
 resource "aws_instance" "JMeter" {
@@ -44,10 +56,14 @@ resource "aws_instance" "JMeter" {
   instance_type               = var.free_tier
   key_name                    = var.access_key
   associate_public_ip_address = true
-  vpc_security_group_ids      = ["${aws_security_group.security-group-0.id}"]
+  vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = merge(var.global_tags, local.timestamp_tags, { Name = "jmeter" })
+  tags = merge(
+    var.env_tags.default_tags, local.timestamp_tags,
+    {
+      Name = "jmeter"
+  })
 }
 
 resource "aws_instance" "elastic_master" {
@@ -55,10 +71,14 @@ resource "aws_instance" "elastic_master" {
   instance_type               = var.free_tier
   key_name                    = var.access_key
   associate_public_ip_address = false
-  vpc_security_group_ids      = ["${aws_security_group.elastic-sg.id}, ${aws_security_group.security-group-0.id}"]
+  vpc_security_group_ids      = [aws_security_group.elastic-sg.id]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = merge(var.global_tags, local.timestamp_tags, { Name = "elastic_master" })
+  tags = merge(
+    var.env_tags.default_tags, local.timestamp_tags,
+    {
+      Name = "elastic_master"
+  })
 }
 
 resource "aws_instance" "kibana" {
@@ -66,10 +86,14 @@ resource "aws_instance" "kibana" {
   instance_type               = var.free_tier
   key_name                    = var.access_key
   associate_public_ip_address = true
-  vpc_security_group_ids      = ["${aws_security_group.kibana-sg.id}"]
+  vpc_security_group_ids      = [aws_security_group.kibana-sg.id]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = merge(var.global_tags, local.timestamp_tags, { Name = "kibana" })
+  tags = merge(
+    var.env_tags.default_tags, local.timestamp_tags,
+    {
+      Name = "kibana"
+  })
 }
 
 resource "aws_instance" "logstash" {
@@ -77,10 +101,14 @@ resource "aws_instance" "logstash" {
   instance_type               = var.free_tier
   key_name                    = var.access_key
   associate_public_ip_address = true
-  vpc_security_group_ids      = ["${aws_security_group.security-group-0.id}"]
+  vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = merge(var.global_tags, local.timestamp_tags, { Name = "logstash" })
+  tags = merge(
+    var.env_tags.default_tags, local.timestamp_tags,
+    {
+      Name = "logstash"
+  })
 }
 
 resource "aws_instance" "jfrog_oss" {
@@ -88,8 +116,12 @@ resource "aws_instance" "jfrog_oss" {
   instance_type               = var.free_tier
   key_name                    = var.access_key
   associate_public_ip_address = true
-  vpc_security_group_ids      = ["${aws_security_group.security-group-0.id}"]
+  vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-0.id
 
-  tags = merge(var.global_tags, local.timestamp_tags, { Name = "jfrog" })
+  tags = merge(
+    var.env_tags.default_tags, local.timestamp_tags,
+    {
+      Name = "jfrog"
+  })
 }
