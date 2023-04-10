@@ -67,25 +67,29 @@ resource "aws_security_group" "security-group-0" {
   name   = "allow-all-ssh_access"
   vpc_id = aws_vpc.vpc-0.id
 
-  dynamic "ingress" {
-    for_each = var.external_comm
-    content {
-      from_port   = ingress.value.from_port
-      to_port     = ingress.value.to_port
-      protocol    = ingress.value.protocol
-      cidr_blocks = ["0.0.0.0/0"]
-      description = "Allow SSH access from outside"
-    }
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow SSH access from outside"
   }
-  dynamic "egress" {
-    for_each = var.allow_outboud_traffic
-    content {
-      from_port   = egress.value.from_port
-      to_port     = egress.value.from_port
-      protocol    = egress.value.protocol
-      cidr_blocks = egress.value.cidr_blocks
-      description = "Allow all outbound traffic"
-    }
+
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow ping from outside"
+  }
+
+  egress {
+
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound traffic"
   }
   tags = merge(
     var.env_tags.default_tags,
@@ -94,44 +98,43 @@ resource "aws_security_group" "security-group-0" {
       CreatedDate = timestamp()
   })
 }
-
 # ELASTICSEARCH SG
 
 resource "aws_security_group" "elastic-sg" {
   name   = "elastic-sg"
   vpc_id = aws_vpc.vpc-0.id
 
-  dynamic "ingress" {
-    for_each = var.internal_comm
-    content {
-      from_port       = ingress.value.from_port
-      to_port         = ingress.value.to_port
-      protocol        = ingress.value.protocol
-      security_groups = [aws_security_group.security-group-0.id]
-      description     = "Allow SSH access and ping only from the security-group-0"
-    }
-  }
-  dynamic "ingress" {
-    for_each = var.es_ports
-    content {
-      from_port       = ingress.value.from_port
-      to_port         = ingress.value.to_port
-      protocol        = ingress.value.protocol
-      security_groups = [aws_security_group.security-group-0.id]
-      description     = "Allow SSH access and ping only from the security-group-0"
-    }
+  ingress {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [aws_security_group.security-group-0.id]
+    description     = "Allow SSH access only from the security-group-0"
   }
 
-  dynamic "egress" {
-    for_each = var.allow_outboud_traffic
-    content {
-      from_port   = egress.value.from_port
-      to_port     = egress.value.from_port
-      protocol    = egress.value.protocol
-      cidr_blocks = egress.value.cidr_blocks
-      description = "Allow all outbound traffic"
-    }
+  ingress {
+    from_port       = -1
+    to_port         = -1
+    protocol        = "icmp"
+    security_groups = [aws_security_group.security-group-0.id]
+    description     = "Allow ping only from the security-group-0"
   }
+  ingress {
+    from_port       = 9200
+    to_port         = 9200
+    protocol        = "tcp"
+    security_groups = [aws_security_group.security-group-0.id]
+    description     = "Allow SSH access only from the security-group-0"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound traffic"
+  }
+
   tags = merge(
     var.env_tags.default_tags,
     {
@@ -139,43 +142,39 @@ resource "aws_security_group" "elastic-sg" {
       CreatedDate = timestamp()
   })
 }
-
 # KIBANA SG
 resource "aws_security_group" "kibana-sg" {
   name   = "kibana-sg"
   vpc_id = aws_vpc.vpc-0.id
 
-  dynamic "ingress" {
-    for_each = var.internal_comm
-    content {
-      from_port       = ingress.value.from_port
-      to_port         = ingress.value.to_port
-      protocol        = ingress.value.protocol
-      security_groups = [aws_security_group.security-group-0.id]
-      description     = "Allow SSH access and ping only from the security-group-0"
-    }
+  ingress {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [aws_security_group.security-group-0.id]
+    description     = "Allow SSH only from the security-group-0"
   }
 
-  dynamic "ingress" {
-    for_each = var.kibana_ports
-    content {
-      from_port   = ingress.value.from_port
-      to_port     = ingress.value.to_port
-      protocol    = ingress.value.protocol
-      cidr_blocks = ["0.0.0.0/0"]
-      description = "Kibana default port"
-    }
+  ingress {
+    from_port       = -1
+    to_port         = -1
+    protocol        = "icmp"
+    security_groups = [aws_security_group.security-group-0.id]
+    description     = "Allow ping only from the security-group-0"
   }
-
-  dynamic "egress" {
-    for_each = var.allow_outboud_traffic
-    content {
-      from_port   = egress.value.from_port
-      to_port     = egress.value.from_port
-      protocol    = egress.value.protocol
-      cidr_blocks = egress.value.cidr_blocks
-      description = "Allow all outbound traffic"
-    }
+  ingress {
+    from_port       = 5106
+    to_port         = 5106
+    protocol        = "tcp"
+    security_groups = [aws_security_group.security-group-0.id]
+    description     = "Allow SSH only from the security-group-0"
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound traffic"
   }
   tags = merge(
     var.env_tags.default_tags,
