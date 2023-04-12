@@ -9,3 +9,4 @@ id_dsa
 terraform.tfstate
 terraform.tfstate.backup
 *.crt
+errored.tfstate
