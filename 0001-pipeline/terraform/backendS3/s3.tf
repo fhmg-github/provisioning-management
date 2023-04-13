@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "terraform" {
-  bucket = "0001-project-tf-bucket"
+  bucket        = "0001-project-tf-bucket"
   force_destroy = false
 }
 
@@ -15,5 +15,5 @@ resource "aws_s3_bucket_versioning" "terraform-versioning" {
   }
   lifecycle {
     prevent_destroy = true
-}
+  }
 }
