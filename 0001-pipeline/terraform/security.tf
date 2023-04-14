@@ -331,7 +331,7 @@ resource "aws_security_group" "jfrog-sg" {
   tags = merge(
     var.env_tags.default_tags,
     {
-      Name        = "logstash-sg"
+      Name        = "jfrog-sg"
       CreatedDate = timestamp()
   })
 }
