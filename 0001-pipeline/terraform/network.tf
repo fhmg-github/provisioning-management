@@ -13,7 +13,19 @@ resource "aws_vpc" "vpc-0" {
 }
 
 # SUBNET
-resource "aws_subnet" "subnet-0" {
+resource "aws_subnet" "subnet-public" {
+  cidr_block        = cidrsubnet(aws_vpc.vpc-0.cidr_block, 3, 0)
+  vpc_id            = aws_vpc.vpc-0.id
+  availability_zone = var.az
+  tags = merge(
+    var.env_tags.default_tags,
+    {
+      Name        = "subnet-0"
+      CreatedDate = timestamp()
+  })
+}
+
+resource "aws_subnet" "subnet-private" {
   cidr_block        = cidrsubnet(aws_vpc.vpc-0.cidr_block, 3, 1)
   vpc_id            = aws_vpc.vpc-0.id
   availability_zone = var.az
@@ -58,6 +70,6 @@ resource "aws_route_table" "route-table-0" {
 # ROUTING TABLE ASSOCIATION
 
 resource "aws_route_table_association" "subnet-association-0" {
-  subnet_id      = aws_subnet.subnet-0.id
+  subnet_id      = aws_subnet.subnet-public.id
   route_table_id = aws_route_table.route-table-0.id
 }
