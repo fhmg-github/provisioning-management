@@ -6,5 +6,9 @@ terraform {
       version = "~> 4.47"
       source  = "hashicorp/aws"
     }
+    ansible = {
+      version = "~> 1.1.0"
+      source  = "ansible/ansible"
+    }
   }
 }
