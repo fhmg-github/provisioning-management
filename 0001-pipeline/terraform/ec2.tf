@@ -13,7 +13,6 @@ resource "aws_instance" "bastion_host" {
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-public.id
-
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
     {
@@ -29,7 +28,6 @@ resource "aws_instance" "ansible_master" {
   vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-private.id
   private_ip                  = "10.0.57.13"
-
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
     {
@@ -108,7 +106,6 @@ resource "aws_instance" "kibana" {
   vpc_security_group_ids      = [aws_security_group.kibana-sg.id]
   subnet_id                   = aws_subnet.subnet-private.id
   private_ip                  = "10.0.61.242"
-
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
     {
