@@ -39,7 +39,7 @@ resource "aws_instance" "ansible_master" {
 resource "aws_instance" "maven" {
   ami                         = var.ami_id
   instance_type               = var.free_tier
-  key_name                    = var.bastion_access_key
+  key_name                    = var.private_instances_access_key
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.maven-sg.id]
   subnet_id                   = aws_subnet.subnet-private.id
