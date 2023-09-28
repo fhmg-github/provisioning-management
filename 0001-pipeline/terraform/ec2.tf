@@ -28,6 +28,7 @@ resource "aws_instance" "ansible_master" {
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-private.id
+  private_ip = "10.0.57.13"
 
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
@@ -43,6 +44,7 @@ resource "aws_instance" "maven" {
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.maven-sg.id]
   subnet_id                   = aws_subnet.subnet-private.id
+  private_ip = "10.0.49.198"
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
     {
@@ -58,6 +60,7 @@ resource "aws_instance" "jenkins_master" {
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.jenkins-sg.id]
   subnet_id                   = aws_subnet.subnet-private.id
+  private_ip = "10.0.34.210"
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
     {
@@ -72,6 +75,7 @@ resource "aws_instance" "jmeter" {
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.jmeter-sg.id]
   subnet_id                   = aws_subnet.subnet-private.id
+  private_ip = "10.0.58.253"
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
     {
@@ -87,7 +91,7 @@ resource "aws_instance" "elastic_master" {
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.elastic-sg.id]
   subnet_id                   = aws_subnet.subnet-private.id
-
+  private_ip = "10.0.48.116"
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
     {
@@ -103,6 +107,7 @@ resource "aws_instance" "kibana" {
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.kibana-sg.id]
   subnet_id                   = aws_subnet.subnet-private.id
+  private_ip = "10.0.61.242"
 
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
@@ -119,6 +124,7 @@ resource "aws_instance" "logstash" {
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.logstash-sg.id]
   subnet_id                   = aws_subnet.subnet-private.id
+  private_ip = "10.0.35.77"
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
     {
@@ -133,6 +139,7 @@ resource "aws_instance" "jfrog_oss" {
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.jfrog-sg.id]
   subnet_id                   = aws_subnet.subnet-private.id
+  private_ip = "10.0.50.185"
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
     {
