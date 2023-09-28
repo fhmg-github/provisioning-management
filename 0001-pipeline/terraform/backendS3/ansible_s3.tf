@@ -2,8 +2,7 @@ resource "aws_s3_bucket" "ansible" {
   bucket        = "0001-project-ansible-bucket"
   force_destroy = false
   tags = {
-    Name        = "Ansible-S3bucket"
-    Envirnoment = "Dev"
+    Name = "Ansible-S3bucket"
   }
 }
 

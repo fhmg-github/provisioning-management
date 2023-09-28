@@ -5,7 +5,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket = "0001-project-tf-bucket"
-    key    = "terraform/pipeline/tfstate"
+    key    = "terraform/pipeline/infra.tfstate"
     region = "us-west-1"
   }
 }
