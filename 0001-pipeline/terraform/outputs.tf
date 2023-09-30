@@ -42,3 +42,8 @@ output "aws_jfrog_oss" {
   value       = aws_instance.jfrog_oss.private_ip
   description = "This is the jfrog_oss node's private IP address"
 }
+
+output "aws_windows" {
+  value       = aws_instance.windows.private_ip
+  description = "This is the windows' private IP address"
+}
