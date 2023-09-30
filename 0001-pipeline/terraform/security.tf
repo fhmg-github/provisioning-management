@@ -99,7 +99,7 @@ resource "aws_security_group" "jenkins-sg" {
     from_port       = 8080
     to_port         = 8080
     protocol        = "tcp"
-    security_groups = [aws_security_group.security-group-0.id]
+    security_groups = [aws_security_group.security-group-0.id, aws_security_group.windows-sg.id]
     description     = "Allow Jenkins access only from the security-group-0"
   }
 
@@ -336,3 +336,37 @@ resource "aws_security_group" "jfrog-sg" {
   })
 }
 
+resource "aws_security_group" "windows-sg" {
+  name   = "windows-sg"
+  vpc_id = aws_vpc.vpc-0.id
+
+  ingress {
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow SSH only from the security-group-0"
+  }
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = [aws_vpc.vpc-0.cidr_block]
+    description = "Allow ping only from the security-group-0"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound traffic"
+  }
+
+  tags = merge(
+    var.env_tags.default_tags,
+    {
+      Name        = "windows-sg"
+      CreatedDate = timestamp()
+  })
+}

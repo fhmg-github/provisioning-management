@@ -144,3 +144,17 @@ resource "aws_instance" "jfrog_oss" {
       Name = "jfrog"
   })
 }
+
+resource "aws_instance" "windows" {
+  ami                         = var.windows_ami_id
+  instance_type               = var.free_tier
+  key_name                    = var.bastion_access_key
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.windows-sg.id]
+  subnet_id                   = aws_subnet.subnet-public.id
+  tags = merge(
+    var.env_tags.default_tags, local.timestamp_tags,
+    {
+      Name = "windows"
+  })
+}
