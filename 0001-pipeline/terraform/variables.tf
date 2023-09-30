@@ -5,7 +5,7 @@ variable "ami_id" {
 
 variable "ansible_master_ami_id" {
   type    = string
-  default = "ami-0e0da7c81bcd9be52"
+  default = "ami-0785c7e4a9157c199"
 }
 
 variable "free_tier" {
