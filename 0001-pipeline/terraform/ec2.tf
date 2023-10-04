@@ -28,7 +28,6 @@ resource "aws_instance" "ansible_master" {
   vpc_security_group_ids      = [aws_security_group.security-group-0.id]
   subnet_id                   = aws_subnet.subnet-private.id
   private_ip                  = "10.0.57.13"
-  /* iam_instance_profile        = aws_iam_role.ansible_automation_role.arn */
   tags = merge(
     var.env_tags.default_tags, local.timestamp_tags,
     {
@@ -36,7 +35,7 @@ resource "aws_instance" "ansible_master" {
   })
 }
 
-resource "aws_instance" "maven" {
+/* resource "aws_instance" "maven" {
   ami                         = var.ami_id
   instance_type               = var.free_tier
   key_name                    = var.private_instances_access_key
@@ -49,13 +48,12 @@ resource "aws_instance" "maven" {
     {
       Name = "maven"
   })
-}
+} */
 
 resource "aws_instance" "jenkins_master" {
-  ami           = var.ami_id
-  instance_type = var.free_tier
-  key_name      = var.private_instances_access_key
-
+  ami                         = var.ami_id
+  instance_type               = var.free_tier
+  key_name                    = var.private_instances_access_key
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.jenkins-sg.id]
   subnet_id                   = aws_subnet.subnet-private.id
@@ -66,7 +64,7 @@ resource "aws_instance" "jenkins_master" {
       Name = "jenkins_master"
   })
 }
-resource "aws_instance" "jmeter" {
+/* resource "aws_instance" "jmeter" {
   ami           = var.ami_id
   instance_type = var.free_tier
   key_name      = var.private_instances_access_key
@@ -143,7 +141,7 @@ resource "aws_instance" "jfrog_oss" {
     {
       Name = "jfrog"
   })
-}
+} */
 
 resource "aws_instance" "windows" {
   ami                         = var.windows_ami_id
