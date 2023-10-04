@@ -8,6 +8,11 @@ variable "ansible_master_ami_id" {
   default = "ami-0785c7e4a9157c199"
 }
 
+variable "jenkinsmaster_ami_id" {
+  type    = string
+  default = "ami-0542cc84792319d68"
+}
+
 variable "windows_ami_id" {
   type    = string
   default = "ami-0c6269b2ddb61bb2e"
