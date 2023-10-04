@@ -3,22 +3,27 @@ output "aws_ansible_master" {
   description = "This is the ansible_master node's private IP address"
 }
 
-/* output "aws_bastion" {
-  value = aws_instance.bastion_host.private_ip
+output "aws_bastion_private_ip" {
+  value       = aws_instance.bastion_host.private_ip
   description = "This is the bastion node's private IP address"
-} */
+}
 
-output "aws_maven" {
+output "aws_bastion_public_ip" {
+  value       = aws_instance.bastion_host.public_ip
+  description = "This is the bastion node's public IP address"
+}
+
+/* output "aws_maven" {
   value       = aws_instance.maven.private_ip
   description = "This is the maven node's private IP address"
-}
+} */
 
 output "aws_jenkins_master" {
   value       = aws_instance.jenkins_master.private_ip
   description = "This is the jenkins_master node's private IP address"
 }
 
-output "aws_jmeter" {
+/* output "aws_jmeter" {
   value       = aws_instance.jmeter.private_ip
   description = "This is the jmeter node's private IP address"
 }
@@ -40,8 +45,8 @@ output "aws_logstash" {
 
 output "aws_jfrog_oss" {
   value       = aws_instance.jfrog_oss.private_ip
-  description = "This is the jfrog_oss node's private IP address"
-}
+  description = "This is the jfrog_oss node's private IP address" 
+}*/
 
 output "aws_windows" {
   value       = aws_instance.windows.private_ip
