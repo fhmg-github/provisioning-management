@@ -1,19 +1,3 @@
-resource "aws_instance" "jenkins_master" {
-  count                       = var.create_perm_resource ? 1 : 0
-  ami                         = var.jenkinsmaster_ami_id
-  instance_type               = var.free_tier
-  key_name                    = var.private_instances_access_key
-  associate_public_ip_address = true
-  vpc_security_group_ids      = [aws_security_group.jenkins-sg.id]
-  subnet_id                   = aws_subnet.subnet-private.id
-  private_ip                  = "10.0.34.210"
-  tags = merge(
-    var.env_tags.default_tags, local.timestamp_tags,
-    {
-      Name = "jenkins_master"
-  })
-}
-
 locals {
   timestamp_tags = {
     LastChangeDate = timestamp()
@@ -22,7 +6,7 @@ locals {
 }
 
 resource "aws_instance" "ec2_instance" {
-  count                       = var.create_resource ? 1 : 0
+  count                       = var.perm_resource ? 1 : 0 //To be included in documentation: set to var.temp_resource if you want to control if this resource can be destroyed later without affecting the rest of the infrastructure. Control de creation or destruction of the resource setting the temp_resource variable in the variable.tf file to true or false
   ami                         = var.ami_id
   instance_type               = var.instance_type
   key_name                    = var.access_key

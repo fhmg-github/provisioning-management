@@ -1,9 +1,14 @@
-variable "create_resource" {
+variable "perm_resource" {
   type        = bool
   default     = true
-  description = "Set to true to create resource(s), false to ignore it (cmd terraform plan) or destroy it (cmd terraform destroy)."
+  description = "Set to true to create permanent resource(s), false to ignore it (cmd terraform plan) or destroy it (cmd terraform destroy)."
 }
 
+variable "temp_resource" {
+  type        = bool
+  default     = true
+  description = "Set to true to create temporary resource(s), false to ignore it (cmd terraform plan) or destroy it (cmd terraform destroy)."
+}
 variable "ami_id" {
   type        = string
   default     = "ami-00756a2b7a21e2bd3"

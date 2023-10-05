@@ -7,7 +7,6 @@ locals {
   }
 }
 resource "aws_instance" "bastion_host" {
-  count                       = var.create_perm_resource ? 1 : 0
   ami                         = var.ami_id
   instance_type               = var.free_tier
   key_name                    = var.bastion_access_key
@@ -22,7 +21,6 @@ resource "aws_instance" "bastion_host" {
 }
 
 resource "aws_instance" "ansible_master" {
-  count                       = var.create_perm_resource ? 1 : 0
   ami                         = var.ansible_master_ami_id
   instance_type               = var.free_tier
   key_name                    = var.private_instances_access_key
@@ -53,7 +51,6 @@ resource "aws_instance" "ansible_master" {
 } */
 
 resource "aws_instance" "jenkins_master" {
-  count                       = var.create_perm_resource ? 1 : 0
   ami                         = var.jenkinsmaster_ami_id
   instance_type               = var.free_tier
   key_name                    = var.private_instances_access_key
@@ -147,7 +144,6 @@ resource "aws_instance" "jfrog_oss" {
 } */
 
 resource "aws_instance" "windows" {
-  count                       = var.create_perm_resource ? 1 : 0
   ami                         = var.windows_ami_id
   instance_type               = var.free_tier
   key_name                    = var.bastion_access_key
