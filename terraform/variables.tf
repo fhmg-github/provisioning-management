@@ -62,3 +62,15 @@ variable "aws_private_key_local_path" {
   type    = string
   default = "/Users/fernandogoncalves/.ssh/fhmglearningaws2-us-west-1.pem"
 }
+
+variable "create_perm_resource" {
+  description = "Set to true to create permanent resource(s), false to ignore it (cmd terraform plan) or destroy it (cmd terraform destroy)."
+  type        = bool
+  default     = true
+}
+
+variable "create_temp_resource" {
+  description = "Set to true to create temporary resource(s), false to ignore it (cmd terraform plan) or destroy it (cmd terraform destroy)."
+  type        = bool
+  default     = true
+}
