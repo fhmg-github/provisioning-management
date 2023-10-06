@@ -5,10 +5,6 @@ resource "aws_route_table" "route_table_private" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = output.nat_gateway
   }
-
-  tags = merge(
-    var.tags
-  )
 }
 
 resource "aws_route_table_association" "route-table-association-private-subnet" {

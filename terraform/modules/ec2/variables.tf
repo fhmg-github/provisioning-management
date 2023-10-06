@@ -40,15 +40,3 @@ variable "security_group_id" {
 variable "subnet_id" {
   type = string
 }
-
-variable "tags" {
-  type = object({
-  })
-  default = {
-    default_tags = {
-      ManagedBy   = "Terraform"
-      Environment = "Dev"
-      Project     = "Demo"
-    }
-  }
-}

@@ -4,7 +4,4 @@ resource "aws_nat_gateway" "nat_gateway" {
   depends_on = [
     output.elastic_ip_id
   ]
-  tags = merge(
-    var.tags
-  )
 }

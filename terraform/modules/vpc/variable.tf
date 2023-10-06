@@ -27,15 +27,3 @@ variable "az" {
   type    = string
   default = "us-west-2a"
 }
-
-variable "tags" {
-  type = object({
-  })
-  default = {
-    default_tags = {
-      ManagedBy   = "Terraform"
-      Environment = "Dev"
-      Project     = "Demo"
-    }
-  }
-}
