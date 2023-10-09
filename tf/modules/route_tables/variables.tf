@@ -10,10 +10,6 @@ variable "cidr_block" {
   type = string
 }
 
-variable "private_subnet_id" {
-  type = string
-}
-
-variable "private_route_table_id" {
+variable "route_table_name" {
   type = string
 }

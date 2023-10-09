@@ -1,5 +1,9 @@
 resource "aws_subnet" "subnet" {
-  cidr_block        = cidrsubnet(var.vpc_cidr_block, 3, 1)
-  vpc_id            = var.vpc_id
-  availability_zone = var.az
+  cidr_block              = var.cidr_block
+  vpc_id                  = var.vpc_id
+  availability_zone       = var.az
+  map_public_ip_on_launch = var.map_public_ip_on_launch
+  tags = {
+    "Name" = var.subnet_name
+  }
 }

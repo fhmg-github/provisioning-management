@@ -3,7 +3,8 @@ variable "s3_bucket_id" {
 }
 
 variable "versioning_configuration_status" {
-  type = string
+  type        = string
+  description = "enabled/disabled"
 }
 
 variable "prevent_destroy" {

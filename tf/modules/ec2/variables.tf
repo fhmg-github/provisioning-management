@@ -4,15 +4,8 @@ variable "perm_resource" {
   description = "Set to true to create permanent resource(s), false to ignore it (cmd terraform plan) or destroy it (cmd terraform destroy)."
 }
 
-variable "temp_resource" {
-  type        = bool
-  default     = true
-  description = "Set to true to create temporary resource(s), false to ignore it (cmd terraform plan) or destroy it (cmd terraform destroy)."
-}
 variable "ami_id" {
-  type        = string
-  default     = "ami-00756a2b7a21e2bd3"
-  description = "us-west-1 ami-id ubuntu"
+  type = string
 }
 
 variable "instance_type" {
@@ -22,13 +15,11 @@ variable "instance_type" {
 
 variable "access_key" {
   type        = string
-  default     = "fhmglearningaws2-us-west-1"
-  description = "us-west-1 key"
+  description = "Define SSH key"
 }
 
 variable "assoc_pub_ip" {
   type        = bool
-  default     = false
   description = "Set to true locally to associate public ip"
 }
 
@@ -38,5 +29,9 @@ variable "security_group_id" {
 }
 
 variable "subnet_id" {
+  type = string
+}
+
+variable "private_ip" {
   type = string
 }

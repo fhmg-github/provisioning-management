@@ -1,7 +1,7 @@
 # PUBLIC SECURITY_GROUPS
-resource "aws_security_group" "ssh_security_group" {
+resource "aws_security_group" "security_group" {
   name   = var.security_group_name
-  vpc_id = output.vpc_id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = var.ingress_port

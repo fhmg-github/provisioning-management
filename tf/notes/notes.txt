@@ -1,0 +1,4 @@
+variable "temp_resource" {
+  type        = bool
+  description = "Set to true to create temporary resource(s), false to ignore it (cmd terraform plan) or destroy it (cmd terraform destroy)."
+}

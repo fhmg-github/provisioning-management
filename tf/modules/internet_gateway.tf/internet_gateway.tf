@@ -1,3 +1,3 @@
-resource "aws_internet_gateway" "internet_gateway" {
+resource "aws_internet_gateway" "ig" {
   vpc_id = var.vpc_id
 }

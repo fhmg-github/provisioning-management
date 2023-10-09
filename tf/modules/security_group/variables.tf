@@ -1,3 +1,12 @@
+variable "security_group_name" {
+  type        = string
+  description = "Give a name to the security group"
+}
+
+variable "vpc_id" {
+  type = string
+}
+
 variable "ingress_port" {
   type        = number
   description = "i.e. 80, 22"

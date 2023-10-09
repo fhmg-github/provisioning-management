@@ -1,0 +1,10 @@
+For creation:
+
+<service_name>
+
+e.g.
+s3
+ec2
+nat_gtw
+...
+

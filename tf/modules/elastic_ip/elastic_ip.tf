@@ -1,3 +1,4 @@
-resource "aws_eip" "elastic_ip" {
-  vpc = true
+resource "aws_eip" "eip" {
+  instance = var.instance_id
+  domain   = "vpc"
 }
