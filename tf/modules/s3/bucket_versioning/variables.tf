@@ -7,7 +7,7 @@ variable "versioning_configuration_status" {
   description = "enabled/disabled"
 }
 
-variable "prevent_destroy" {
+/* variable "prevent_destroy" {
   type    = bool
   default = true
-}
+} */

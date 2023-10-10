@@ -15,7 +15,7 @@ variable "path_state_file" {
 
 variable "perm_resource" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "temp_resource" {
