@@ -14,7 +14,6 @@ variable "az" {
 
 variable "map_public_ip_on_launch" {
   type        = bool
-  default     = false
   description = "Whether to map a public IP on instance launch"
 }
 

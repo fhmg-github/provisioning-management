@@ -22,6 +22,6 @@ resource "aws_s3_bucket_versioning" "s3_bucket_versioning" {
     status = var.versioning_configuration_status
   }
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
