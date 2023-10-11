@@ -1,8 +1,8 @@
-/* terraform {
+terraform {
   backend "s3" {
-    bucket  = var.s3_backend_bucket_name
-    key     = var.path_state_file
-    region  = var.aws_region
+    bucket  = "this-project-demo"
+    key     = "terraform/dev/perm_resources/perm-resources-dev.tfstate"
+    region  = "us-west-2"
     encrypt = true
   }
-} */
+}

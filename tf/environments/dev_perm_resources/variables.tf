@@ -8,11 +8,6 @@ variable "s3_backend_bucket_name" {
   default = "demo"
 }
 
-variable "path_state_file" {
-  type    = string
-  default = "terraform/demo-dev.tfstate"
-}
-
 variable "perm_resource" {
   type    = bool
   default = false
