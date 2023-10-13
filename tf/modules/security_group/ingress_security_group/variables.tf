@@ -1,4 +1,4 @@
-variable "sg_name" {
+variable "ingress_sg_name" {
   type        = string
   description = "Give a name to the security group"
 }
@@ -6,7 +6,7 @@ variable "sg_name" {
 variable "vpc_id" {
   type = string
 }
-/* 
+
 variable "ingress_port" {
   type        = number
   description = "i.e. 80, 22"
@@ -22,10 +22,10 @@ variable "ingress_cidr_block" {
   default = [ ]
 }
 
-variable "ingress_security_groups" {
+/* variable "ingress_security_groups" {
   type = list(string)
   default = [ ]
-}
+} */
 
 variable "ingress_security_groups" {
   type = string
@@ -33,4 +33,4 @@ variable "ingress_security_groups" {
 
 variable "type" {
   type = string
-} */
+}
