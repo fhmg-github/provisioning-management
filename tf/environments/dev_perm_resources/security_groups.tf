@@ -32,17 +32,19 @@ resource "aws_security_group" "demo_pub_sg" {
   }
 }
 
-# MAVEN SECURITY GROUP
 resource "aws_security_group" "demo_maven_sg" {
   name   = "maven-sg"
   vpc_id = module.demo_vpc.vpc_id
 
   ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow SSH access only from the demo_pub_sg"
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow SSH access only from the demo_pub_sg"
   }
 
   ingress {
@@ -50,7 +52,10 @@ resource "aws_security_group" "demo_maven_sg" {
     to_port     = -1
     protocol    = "icmp"
     cidr_blocks = [var.vpc_cidr_block]
-    #security_groups = [aws_security_group.demo_pub_sg.id, aws_security_group.jenkins-sg.id]
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
     description = "Allow ping only from the demo_pub_sg"
   }
 
@@ -66,24 +71,34 @@ resource "aws_security_group" "demo_maven_sg" {
   }
 }
 
-# JENKINS SECURITY GROUP
 resource "aws_security_group" "demo_jenkins_sg" {
   name   = "jenkins-sg"
   vpc_id = module.demo_vpc.vpc_id
 
   ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow SSH access only from the demo_pub_sg"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow SSH access only from the demo_pub_sg"
   }
 
   ingress {
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
-    cidr_blocks = [var.vpc_cidr_block]
+    from_port = -1
+    to_port   = -1
+    protocol  = "icmp"
+    cidr_blocks = [
+      var.vpc_cidr_block,
+      "0.0.0.0/0"
+    ]
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
     description = "Allow ping only from the demo_pub_sg"
   }
 
@@ -91,6 +106,7 @@ resource "aws_security_group" "demo_jenkins_sg" {
     from_port       = 8080
     to_port         = 8080
     protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
     security_groups = [aws_security_group.demo_pub_sg.id, aws_security_group.demo_windows_sg.id]
     description     = "Allow Jenkins access only from the demo_pub_sg"
   }
@@ -107,17 +123,19 @@ resource "aws_security_group" "demo_jenkins_sg" {
   }
 }
 
-# MAVEN SECURITY GROUP
 resource "aws_security_group" "demo_jmeter_sg" {
   name   = "jmeter-sg"
   vpc_id = module.demo_vpc.vpc_id
 
   ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow SSH access only from the demo_pub_sg"
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow SSH access only from the demo_pub_sg"
   }
 
   ingress {
@@ -125,6 +143,10 @@ resource "aws_security_group" "demo_jmeter_sg" {
     to_port     = -1
     protocol    = "icmp"
     cidr_blocks = [var.vpc_cidr_block]
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
     description = "Allow ping only from the demo_pub_sg"
   }
 
@@ -140,9 +162,7 @@ resource "aws_security_group" "demo_jmeter_sg" {
   }
 }
 
-# ELASTICSEARCH SG
-
-resource "aws_security_group" "demo_elastic_sg" {
+/* resource "aws_security_group" "demo_elastic_sg" {
   name   = "elastic-sg"
   vpc_id = module.demo_vpc.vpc_id
 
@@ -180,9 +200,9 @@ resource "aws_security_group" "demo_elastic_sg" {
   lifecycle {
     create_before_destroy = true
   }
-}
-# KIBANA SG
-resource "aws_security_group" "demo_kibana_sg" {
+} */
+
+/* resource "aws_security_group" "demo_kibana_sg" {
   name   = "kibana-sg"
   vpc_id = module.demo_vpc.vpc_id
 
@@ -220,10 +240,9 @@ resource "aws_security_group" "demo_kibana_sg" {
   lifecycle {
     create_before_destroy = true
   }
-}
+} */
 
-# LOGSTASH SG
-resource "aws_security_group" "demo_logstash_sg" {
+/* resource "aws_security_group" "demo_logstash_sg" {
   name   = "logstash-sg"
   vpc_id = module.demo_vpc.vpc_id
 
@@ -261,10 +280,9 @@ resource "aws_security_group" "demo_logstash_sg" {
   lifecycle {
     create_before_destroy = true
   }
-}
+} */
 
-# JFROG SG
-resource "aws_security_group" "demo_jfrog_sg" {
+/* resource "aws_security_group" "demo_jfrog_sg" {
   name   = "jfrog-sg"
   vpc_id = module.demo_vpc.vpc_id
 
@@ -302,7 +320,7 @@ resource "aws_security_group" "demo_jfrog_sg" {
   lifecycle {
     create_before_destroy = true
   }
-}
+} */
 
 resource "aws_security_group" "demo_windows_sg" {
   name   = "windows-sg"
@@ -320,6 +338,9 @@ resource "aws_security_group" "demo_windows_sg" {
     to_port     = -1
     protocol    = "icmp"
     cidr_blocks = [var.vpc_cidr_block]
+    security_groups = [
+      aws_security_group.demo_pub_sg.id
+    ]
     description = "Allow ping only from the demo_pub_sg"
   }
 
@@ -334,3 +355,111 @@ resource "aws_security_group" "demo_windows_sg" {
     create_before_destroy = true
   }
 }
+
+resource "aws_security_group" "elk_sg" {
+  name   = "elk_sg"
+  vpc_id = module.demo_vpc.vpc_id
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow SSH only from the demo_pub_sg"
+  }
+
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = [var.vpc_cidr_block]
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow ping only from the demo_pub_sg"
+  }
+
+  ingress {
+    from_port = 9600
+    to_port   = 9600
+    protocol  = "tcp"
+    security_groups = [
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow access to Kibana only from the demo_pub_sg"
+  }
+
+  ingress {
+    from_port = 9200
+    to_port   = 9200
+    protocol  = "tcp"
+    security_groups = [
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow access to Kibana only from the demo_pub_sg"
+  }
+
+  ingress {
+    from_port = 5106
+    to_port   = 5106
+    protocol  = "tcp"
+    security_groups = [
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow access to Kibana only from the demo_pub_sg"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound traffic"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+resource "aws_security_group" "demo_ansible_master_sg" {
+  name   = "ansible_master_sg"
+  vpc_id = module.demo_vpc.vpc_id
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow SSH access only from the demo_pub_sg"
+  }
+
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = [var.vpc_cidr_block]
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow ping only from the demo_pub_sg"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound traffic"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+

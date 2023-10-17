@@ -34,6 +34,11 @@ variable "ubuntu_ami_id" {
   description = "Ubuntu AMI ID for us-west-2 region"
 }
 
+variable "windows_ami_id" {
+  type        = string
+  default     = "ami-0fae5ac34f36d5963"
+  description = "Windows AMI ID for us-west-2 region"
+}
 variable "instance_type" {
   type    = string
   default = "t2.micro"
@@ -41,7 +46,7 @@ variable "instance_type" {
 
 variable "bastion_access_key" {
   type    = string
-  default = "fhmglearningaws2"
+  default = "bastion"
 }
 
 variable "private_instances_access_key" {

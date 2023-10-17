@@ -3,7 +3,8 @@ variable "vpc_id" {
 }
 
 variable "nat_gateway_id" {
-  type = string
+  /* type = string */
+  nullable = true
 }
 
 variable "cidr_block" {
