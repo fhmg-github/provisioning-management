@@ -1,4 +1,4 @@
-output "s3_bucket_id" {
+/* output "s3_bucket_id" {
   value = module.demo_bucket.s3_bucket_id
 }
 
@@ -67,4 +67,4 @@ output "demo_jfrog_sg_id" {
 
 output "demo_windows_sg_id" {
   value = aws_security_group.demo_windows_sg.id
-}
+} */

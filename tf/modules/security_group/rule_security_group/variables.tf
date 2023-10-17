@@ -10,12 +10,17 @@ variable "protocol" {
     type = string
 }
 
-variable "security_groups" {
+variable "security_groups_id" {
     type = string
-    default = null
+    nullable = true
 }
 
 variable "cidr_blocks" {
     type = list(string)
     default = null
+}
+
+variable "description" {
+    type = string
+    default = "Security Group Rule Description"
 }

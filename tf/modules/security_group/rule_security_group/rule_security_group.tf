@@ -4,5 +4,10 @@ resource "aws_security_group_rule" "sg_group_rule" {
   to_port = var.port
   protocol = var.protocol
   cidr_blocks = var.cidr_blocks
-  security_group_id = var.security_groups
+  security_group_id = var.security_groups_id
+  description = var.description
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

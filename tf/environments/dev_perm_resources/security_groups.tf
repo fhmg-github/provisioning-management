@@ -27,6 +27,9 @@ resource "aws_security_group" "demo_pub_sg" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # MAVEN SECURITY GROUP
@@ -57,6 +60,9 @@ resource "aws_security_group" "demo_maven_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
@@ -96,6 +102,9 @@ resource "aws_security_group" "demo_jenkins_sg" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # MAVEN SECURITY GROUP
@@ -125,6 +134,9 @@ resource "aws_security_group" "demo_jmeter_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
@@ -165,6 +177,9 @@ resource "aws_security_group" "demo_elastic_sg" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 # KIBANA SG
 resource "aws_security_group" "demo_kibana_sg" {
@@ -201,6 +216,9 @@ resource "aws_security_group" "demo_kibana_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
@@ -240,6 +258,9 @@ resource "aws_security_group" "demo_logstash_sg" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # JFROG SG
@@ -278,6 +299,9 @@ resource "aws_security_group" "demo_jfrog_sg" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_security_group" "demo_windows_sg" {
@@ -305,5 +329,8 @@ resource "aws_security_group" "demo_windows_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     description = "Allow all outbound traffic"
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }

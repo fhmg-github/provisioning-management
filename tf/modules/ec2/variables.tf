@@ -1,7 +1,12 @@
-variable "perm_resource" {
+/* variable "perm_resource" {
   type        = bool
   default     = true
   description = "Set to true to create permanent resource(s), false to ignore it (cmd terraform plan) or destroy it (cmd terraform destroy)."
+} */
+
+variable "instance_name" {
+  type = string
+  default = "Define EC2 name"
 }
 
 variable "ami_id" {
@@ -24,8 +29,9 @@ variable "assoc_pub_ip" {
 }
 
 variable "security_group_id" {
-  type    = list(any)
-  default = []
+  type = list(string)
+  /* type    = list(any)
+  default = [] */
 }
 
 variable "subnet_id" {
@@ -33,5 +39,7 @@ variable "subnet_id" {
 }
 
 variable "private_ip" {
-  type = string
+  /* type = string */
+  default = "10.0.0.0/24"
+  nullable = true
 }

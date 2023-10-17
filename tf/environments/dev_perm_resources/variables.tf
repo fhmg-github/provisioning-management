@@ -13,16 +13,6 @@ variable "s3_backend_bucket_name" {
   default = "demo"
 }
 
-variable "perm_resource" {
-  type    = bool
-  default = false
-}
-
-variable "temp_resource" {
-  type    = bool
-  default = true
-}
-
 variable "vpc_cidr_block" {
   type    = string
   default = "10.0.0.0/16"
@@ -36,6 +26,27 @@ variable "pub_route_tables_cidr_block" {
 variable "priv_route_tables_cidr_block" {
   type    = string
   default = "0.0.0.0/0"
+}
+
+variable "ubuntu_ami_id" {
+  type        = string
+  default     = "ami-03f65b8614a860c29"
+  description = "Ubuntu AMI ID for us-west-2 region"
+}
+
+variable "instance_type" {
+  type    = string
+  default = "t2.micro"
+}
+
+variable "bastion_access_key" {
+  type    = string
+  default = "fhmglearningaws2"
+}
+
+variable "private_instances_access_key" {
+  type    = string
+  default = "private_instances"
 }
 
 variable "tags" {

@@ -6,7 +6,6 @@ locals {
 }
 
 resource "aws_instance" "ec2" {
-  count                       = var.perm_resource ? 1 : 0 //To be included in documentation: set to var.temp_resource if you want to control if this resource can be destroyed later without affecting the rest of the infrastructure. Control de creation or destruction of the resource setting the temp_resource variable in the variable.tf file to true or false
   ami                         = var.ami_id
   instance_type               = var.instance_type
   key_name                    = var.access_key
@@ -14,4 +13,7 @@ resource "aws_instance" "ec2" {
   vpc_security_group_ids      = var.security_group_id
   subnet_id                   = var.subnet_id
   private_ip                  = var.private_ip
+  tags = {
+    "Name" = var.instance_name
+  }
 }
