@@ -44,6 +44,11 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
+variable "elk_instance_type" {
+  type    = string
+  default = "t2.large"
+}
+
 variable "bastion_access_key" {
   type    = string
   default = "bastion"
