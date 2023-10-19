@@ -46,6 +46,11 @@ variable "instance_type" {
 
 variable "elk_instance_type" {
   type    = string
+  default = "t2.xlarge"
+}
+
+variable "jmeter_instance_type" {
+  type    = string
   default = "t2.large"
 }
 

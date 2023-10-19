@@ -112,7 +112,7 @@ module "demo_jmeter" {
   source        = "../../modules/ec2"
   instance_name = "demo_jmeter"
   ami_id        = var.ubuntu_ami_id
-  instance_type = var.instance_type
+  instance_type = var.jmeter_instance_type
   subnet_id     = module.demo_priv_subnet.subnet_id
   assoc_pub_ip  = false
   access_key    = var.private_instances_access_key

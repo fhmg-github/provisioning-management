@@ -404,8 +404,8 @@ resource "aws_security_group" "elk_sg" {
   }
 
   ingress {
-    from_port = 5106
-    to_port   = 5106
+    from_port = 5601
+    to_port   = 5601
     protocol  = "tcp"
     security_groups = [
       aws_security_group.demo_windows_sg.id
