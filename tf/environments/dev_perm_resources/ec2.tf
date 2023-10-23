@@ -2,7 +2,7 @@ module "demo_bastion" {
   count         = var.ec2_perm_resource ? 1 : 0
   source        = "../../modules/ec2"
   instance_name = "demo_bastion"
-  ami_id        = var.ubuntu_ami_id
+  ami_id        = "ami-08c7bd264f2f0f1b5"
   instance_type = var.instance_type
   subnet_id     = module.demo_pub_subnet.subnet_id
   assoc_pub_ip  = true
@@ -18,7 +18,7 @@ module "demo_windows_bastion" {
   source        = "../../modules/ec2"
   instance_name = "demo_win_bastion"
   ami_id        = var.windows_ami_id
-  instance_type = var.instance_type
+  instance_type = var.windows_instance_type
   subnet_id     = module.demo_pub_subnet.subnet_id
   assoc_pub_ip  = true
   access_key    = var.bastion_access_key
@@ -91,7 +91,7 @@ module "demo_ansible_master" {
   ]
 }
 
-module "demo_maven" {
+/* module "demo_maven" {
   count         = var.ec2_temp_resource ? 1 : 0
   source        = "../../modules/ec2"
   instance_name = "demo_maven"
@@ -105,9 +105,9 @@ module "demo_maven" {
     aws_security_group.demo_maven_sg.id,
     aws_security_group.demo_windows_sg.id
   ]
-}
+} */
 
-module "demo_jmeter" {
+/* module "demo_jmeter" {
   count         = var.ec2_temp_resource ? 1 : 0
   source        = "../../modules/ec2"
   instance_name = "demo_jmeter"
@@ -121,4 +121,4 @@ module "demo_jmeter" {
     aws_security_group.demo_jmeter_sg.id,
     aws_security_group.demo_windows_sg.id
   ]
-}
+} */

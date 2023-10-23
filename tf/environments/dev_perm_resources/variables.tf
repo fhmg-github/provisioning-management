@@ -54,6 +54,11 @@ variable "jmeter_instance_type" {
   default = "t2.large"
 }
 
+variable "windows_instance_type" {
+  type    = string
+  default = "t2.medium"
+}
+
 variable "bastion_access_key" {
   type    = string
   default = "bastion"
@@ -62,16 +67,4 @@ variable "bastion_access_key" {
 variable "private_instances_access_key" {
   type    = string
   default = "private_instances"
-}
-
-variable "tags" {
-  type = object({
-  })
-  default = {
-    default_tags = {
-      ManagedBy   = "Terraform"
-      Environment = "Dev"
-      Project     = "Demo"
-    }
-  }
 }
