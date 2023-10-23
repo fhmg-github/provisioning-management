@@ -13,4 +13,9 @@ variable "cidr_block" {
 
 variable "route_table_name" {
   type = string
+  default = "demo_priv_route_table"
+}
+variable "project_name" {
+  type = string
+  default = "demo"
 }

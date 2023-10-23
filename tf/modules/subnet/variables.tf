@@ -19,5 +19,9 @@ variable "map_public_ip_on_launch" {
 
 variable "subnet_name" {
   type        = string
-  description = "The name of the subnet"
+  default = "demo_subnet"
+}
+variable "project_name" {
+  type = string
+  default = "demo"
 }

@@ -15,5 +15,6 @@ resource "aws_instance" "ec2" {
   private_ip                  = var.private_ip
   tags = {
     "Name" = var.instance_name
+    "Project" = var.project_name
   }
 }

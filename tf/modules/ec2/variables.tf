@@ -1,6 +1,6 @@
 variable "instance_name" {
   type = string
-  default = "Define EC2 name"
+  default = "demo_instance"
 }
 
 variable "ami_id" {
@@ -35,4 +35,9 @@ variable "subnet_id" {
 variable "private_ip" {
   type = string
   nullable = true
+}
+
+variable "project_name" {
+  type = string
+  default = "demo"
 }

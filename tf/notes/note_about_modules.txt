@@ -1,5 +1,0 @@
-Remember that when creating the resource, use only one module for either resource "private" or "public".
-Adjust the module to be only 1 and delete the others
-
-When creating the environment folder, adjust the tags in the variable file to have the tag related to the env
-instead having it in the module tag

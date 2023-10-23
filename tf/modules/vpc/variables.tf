@@ -12,3 +12,12 @@ variable "enable_dns_support" {
   type    = bool
   default = false
 }
+
+variable "vpc_name" {
+  type        = string
+  default = "demo_vpc"
+}
+variable "project_name" {
+  type = string
+  default = "demo"
+}

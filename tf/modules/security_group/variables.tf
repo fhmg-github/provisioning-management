@@ -1,5 +1,6 @@
 variable "sg_name" {
   type        = string
+  default = "demo_sg_name"
   description = "Give a name to the security group"
 }
 
@@ -34,3 +35,8 @@ variable "ingress_security_groups" {
 variable "type" {
   type = string
 } */
+
+variable "project_name" {
+  type = string
+  default = "demo"
+}

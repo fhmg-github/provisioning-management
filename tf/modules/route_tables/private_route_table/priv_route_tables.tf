@@ -5,7 +5,8 @@ resource "aws_route_table" "private_route_tables" {
     cidr_block     = var.cidr_block
     nat_gateway_id = var.nat_gateway_id
   }
-  tags = {
+    tags = {
     "Name" = var.route_table_name
+    "Project" = var.project_name
   }
 }

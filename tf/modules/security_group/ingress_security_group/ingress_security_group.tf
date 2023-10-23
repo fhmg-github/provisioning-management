@@ -12,4 +12,8 @@ resource "aws_security_group" "ingress_sg" {
   lifecycle {
     create_before_destroy = true
   }
+    tags = {
+    "Name" = var.ingress_sg_name
+    "Project" = var.project_name
+  }
 }

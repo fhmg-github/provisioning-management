@@ -1,5 +1,6 @@
 variable "egress_sg_name" {
   type        = string
+  default = "egress_sg_name"
   description = "Give a name to the security group"
 }
 
@@ -20,4 +21,8 @@ variable "egress_protocol" {
 variable "egress_cidr_block" {
   type    = list(string)
   default = []
+}
+variable "project_name" {
+  type = string
+  default = "demo"
 }
