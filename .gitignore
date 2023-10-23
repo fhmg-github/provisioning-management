@@ -3,6 +3,7 @@ id_rsa.pub
 id_rsa
 id_dsa.pub
 id_dsa
+*.pub
 *.pem
 *.key
 .terraform/
