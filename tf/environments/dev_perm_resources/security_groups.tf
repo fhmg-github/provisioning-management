@@ -1,6 +1,5 @@
-# PUBLIC SECURITY_GROUPS
 resource "aws_security_group" "demo_pub_sg" {
-  name   = "allow-all-ssh_access"
+  name   = "demo_pub_sg"
   vpc_id = module.demo_vpc.vpc_id
 
   ingress {
@@ -8,7 +7,7 @@ resource "aws_security_group" "demo_pub_sg" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow SSH access from outside"
+    description = "Allow SSH access from anywhere"
   }
 
   ingress {
@@ -16,7 +15,7 @@ resource "aws_security_group" "demo_pub_sg" {
     to_port     = -1
     protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow ping from outside"
+    description = "Allow ping from anywhere"
   }
 
   egress {
@@ -30,10 +29,14 @@ resource "aws_security_group" "demo_pub_sg" {
   lifecycle {
     create_before_destroy = true
   }
+  tags = {
+    "Name"    = "demo_pub_sg"
+    "Project" = "demo"
+  }
 }
 
-resource "aws_security_group" "demo_maven_sg" {
-  name   = "maven-sg"
+/* resource "aws_security_group" "demo_maven_sg" {
+  name   = "maven_sg"
   vpc_id = module.demo_vpc.vpc_id
 
   ingress {
@@ -44,7 +47,7 @@ resource "aws_security_group" "demo_maven_sg" {
       aws_security_group.demo_pub_sg.id,
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow SSH access only from the demo_pub_sg"
+    description = "Allow SSH access from the demo_pub_sg and from windows_sg"
   }
 
   ingress {
@@ -56,7 +59,7 @@ resource "aws_security_group" "demo_maven_sg" {
       aws_security_group.demo_pub_sg.id,
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow ping only from the demo_pub_sg"
+    description = "Allow SSH access from the demo_pub_sg, from windows_sg, and within vpc"
   }
 
   egress {
@@ -69,10 +72,14 @@ resource "aws_security_group" "demo_maven_sg" {
   lifecycle {
     create_before_destroy = true
   }
-}
+  tags = {
+    "Name"    = "demo_maven_sg"
+    "Project" = "demo"
+  }
+} */
 
 resource "aws_security_group" "demo_jenkins_sg" {
-  name   = "jenkins-sg"
+  name   = "jenkins_sg"
   vpc_id = module.demo_vpc.vpc_id
 
   ingress {
@@ -84,7 +91,7 @@ resource "aws_security_group" "demo_jenkins_sg" {
       aws_security_group.demo_pub_sg.id,
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow SSH access only from the demo_pub_sg"
+    description = "Allow SSH access from the demo_pub_sg, from windows_sg, and anywhere from the internet"
   }
 
   ingress {
@@ -99,16 +106,19 @@ resource "aws_security_group" "demo_jenkins_sg" {
       aws_security_group.demo_pub_sg.id,
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow ping only from the demo_pub_sg"
+    description = "Allow SSH access from the demo_pub_sg, from windows_sg, and anywhere from the internet"
   }
 
   ingress {
-    from_port       = 8080
-    to_port         = 8080
-    protocol        = "tcp"
-    cidr_blocks     = ["0.0.0.0/0"]
-    security_groups = [aws_security_group.demo_pub_sg.id, aws_security_group.demo_windows_sg.id]
-    description     = "Allow Jenkins access only from the demo_pub_sg"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow SSH access from the demo_pub_sg, from windows_sg, and anywhere from the internet"
   }
 
   egress {
@@ -121,10 +131,14 @@ resource "aws_security_group" "demo_jenkins_sg" {
   lifecycle {
     create_before_destroy = true
   }
+  tags = {
+    "Name"    = "demo_jenkins_sg"
+    "Project" = "demo"
+  }
 }
 
-resource "aws_security_group" "demo_jmeter_sg" {
-  name   = "jmeter-sg"
+/* resource "aws_security_group" "demo_jmeter_sg" {
+  name   = "jmeter_sg"
   vpc_id = module.demo_vpc.vpc_id
 
   ingress {
@@ -135,7 +149,7 @@ resource "aws_security_group" "demo_jmeter_sg" {
       aws_security_group.demo_pub_sg.id,
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow SSH access only from the demo_pub_sg"
+    description = "Allow SSH access from the demo_pub_sg, from windows_sg"
   }
 
   ingress {
@@ -147,7 +161,7 @@ resource "aws_security_group" "demo_jmeter_sg" {
       aws_security_group.demo_pub_sg.id,
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow ping only from the demo_pub_sg"
+    description = "Allow SSH access from the demo_pub_sg, from windows_sg, and anywhere whithing the VPC"
   }
 
   egress {
@@ -160,170 +174,14 @@ resource "aws_security_group" "demo_jmeter_sg" {
   lifecycle {
     create_before_destroy = true
   }
-}
-
-/* resource "aws_security_group" "demo_elastic_sg" {
-  name   = "elastic-sg"
-  vpc_id = module.demo_vpc.vpc_id
-
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow SSH access only from the demo_pub_sg"
-  }
-
-  ingress {
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
-    cidr_blocks = [var.vpc_cidr_block]
-    description = "Allow ping only from the demo_pub_sg"
-  }
-
-  ingress {
-    from_port       = 9200
-    to_port         = 9200
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow ES access only from the demo_pub_sg"
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow all outbound traffic"
-  }
-  lifecycle {
-    create_before_destroy = true
-  }
-} */
-
-/* resource "aws_security_group" "demo_kibana_sg" {
-  name   = "kibana-sg"
-  vpc_id = module.demo_vpc.vpc_id
-
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow SSH only from the demo_pub_sg"
-  }
-
-  ingress {
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
-    cidr_blocks = [var.vpc_cidr_block]
-    description = "Allow ping only from the demo_pub_sg"
-  }
-
-  ingress {
-    from_port       = 5106
-    to_port         = 5106
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow access to Kibana only from the demo_pub_sg"
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow all outbound traffic"
-  }
-  lifecycle {
-    create_before_destroy = true
-  }
-} */
-
-/* resource "aws_security_group" "demo_logstash_sg" {
-  name   = "logstash-sg"
-  vpc_id = module.demo_vpc.vpc_id
-
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow SSH only from the demo_pub_sg"
-  }
-
-  ingress {
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
-    cidr_blocks = [var.vpc_cidr_block]
-    description = "Allow ping only from the demo_pub_sg"
-  }
-
-  ingress {
-    from_port       = 9600
-    to_port         = 9600
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow access to Kibana only from the demo_pub_sg"
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow all outbound traffic"
-  }
-  lifecycle {
-    create_before_destroy = true
-  }
-} */
-
-/* resource "aws_security_group" "demo_jfrog_sg" {
-  name   = "jfrog-sg"
-  vpc_id = module.demo_vpc.vpc_id
-
-  ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow SSH only from the demo_pub_sg"
-  }
-
-  ingress {
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
-    cidr_blocks = [var.vpc_cidr_block]
-    description = "Allow ping only from the demo_pub_sg"
-  }
-
-  ingress {
-    from_port       = 9600
-    to_port         = 9600
-    protocol        = "tcp"
-    security_groups = [aws_security_group.demo_pub_sg.id]
-    description     = "Allow access to Kibana only from the demo_pub_sg"
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow all outbound traffic"
-  }
-  lifecycle {
-    create_before_destroy = true
+  tags = {
+    "Name"    = "demo_jmeter_sg"
+    "Project" = "demo"
   }
 } */
 
 resource "aws_security_group" "demo_windows_sg" {
-  name   = "windows-sg"
+  name   = "windows_sg"
   vpc_id = module.demo_vpc.vpc_id
 
   ingress {
@@ -331,7 +189,7 @@ resource "aws_security_group" "demo_windows_sg" {
     to_port     = 3389
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow SSH only from the demo_pub_sg"
+    description = "Allow RDP access from anywhere in the internet"
   }
   ingress {
     from_port   = -1
@@ -341,7 +199,7 @@ resource "aws_security_group" "demo_windows_sg" {
     security_groups = [
       aws_security_group.demo_pub_sg.id
     ]
-    description = "Allow ping only from the demo_pub_sg"
+    description = "Allow ping only from the demo_pub_sg and withing the VPC"
   }
 
   egress {
@@ -353,6 +211,10 @@ resource "aws_security_group" "demo_windows_sg" {
   }
   lifecycle {
     create_before_destroy = true
+  }
+  tags = {
+    "Name"    = "demo_windows_sg"
+    "Project" = "demo"
   }
 }
 
@@ -368,7 +230,7 @@ resource "aws_security_group" "elk_sg" {
       aws_security_group.demo_pub_sg.id,
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow SSH only from the demo_pub_sg"
+    description = "Allow SSH only from the demo_pub_sg and the windows_sg"
   }
 
   ingress {
@@ -380,7 +242,7 @@ resource "aws_security_group" "elk_sg" {
       aws_security_group.demo_pub_sg.id,
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow ping only from the demo_pub_sg"
+    description = "Allow SSH only from the demo_pub_sg, the windows_sg, and whithin the VPC"
   }
 
   ingress {
@@ -390,7 +252,7 @@ resource "aws_security_group" "elk_sg" {
     security_groups = [
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow access to Kibana only from the demo_pub_sg"
+    description = "Allow access to Kibana only from the demo_windows_sg"
   }
 
   ingress {
@@ -400,7 +262,7 @@ resource "aws_security_group" "elk_sg" {
     security_groups = [
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow access to Kibana only from the demo_pub_sg"
+    description = "Allow access to Kibana only from the demo_windows_sg"
   }
 
   ingress {
@@ -410,7 +272,7 @@ resource "aws_security_group" "elk_sg" {
     security_groups = [
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow access to Kibana only from the demo_pub_sg"
+    description = "Allow access to Kibana only from the demo_windows_sg"
   }
 
   egress {
@@ -422,6 +284,10 @@ resource "aws_security_group" "elk_sg" {
   }
   lifecycle {
     create_before_destroy = true
+  }
+  tags = {
+    "Name"    = "elk_sg"
+    "Project" = "demo"
   }
 }
 resource "aws_security_group" "demo_ansible_master_sg" {
@@ -436,7 +302,7 @@ resource "aws_security_group" "demo_ansible_master_sg" {
       aws_security_group.demo_pub_sg.id,
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow SSH access only from the demo_pub_sg"
+    description = "Allow SSH only from the demo_pub_sg and the windows_sg"
   }
 
   ingress {
@@ -448,7 +314,7 @@ resource "aws_security_group" "demo_ansible_master_sg" {
       aws_security_group.demo_pub_sg.id,
       aws_security_group.demo_windows_sg.id
     ]
-    description = "Allow ping only from the demo_pub_sg"
+    description = "Allow ping only from the demo_pub_sg, the windows_sg, and whithin the VPC"
   }
 
   egress {
@@ -461,5 +327,62 @@ resource "aws_security_group" "demo_ansible_master_sg" {
   lifecycle {
     create_before_destroy = true
   }
+  tags = {
+    "Name"    = "demo_ansible_master_sg"
+    "Project" = "demo"
+  }
 }
 
+resource "aws_security_group" "demo_http_sg" {
+  name   = "http_sg"
+  vpc_id = module.demo_vpc.vpc_id
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow SSH only from the demo_pub_sg and the windows_sg"
+  }
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow HTTP access from the demo_pub_sg, windows_sg and anywhere on the internet"
+  }
+
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = [var.vpc_cidr_block]
+    security_groups = [
+      aws_security_group.demo_pub_sg.id,
+      aws_security_group.demo_windows_sg.id
+    ]
+    description = "Allow ping only from the demo_pub_sg, the windows_sg, and whithin the VPC"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound traffic"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+  tags = {
+    "Name"    = "http_sg"
+    "Project" = "demo"
+  }
+}

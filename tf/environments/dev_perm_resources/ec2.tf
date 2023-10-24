@@ -1,7 +1,7 @@
 module "demo_bastion" {
   count         = var.ec2_perm_resource ? 1 : 0
   source        = "../../modules/ec2"
-  instance_name = "demo_bastion"
+  instance_name = "demo_linux_bastion"
   ami_id        = "ami-08c7bd264f2f0f1b5"
   instance_type = var.instance_type
   subnet_id     = module.demo_pub_subnet.subnet_id
@@ -32,28 +32,12 @@ module "demo_jenkins" {
   count         = var.ec2_perm_resource ? 1 : 0
   source        = "../../modules/ec2"
   instance_name = "demo_jenkins_master"
-  ami_id        = "ami-01678e9ec0086563e"
+  ami_id        = "ami-05d0edd6a398f10c3"
   instance_type = var.instance_type
   subnet_id     = module.demo_pub_subnet.subnet_id
   assoc_pub_ip  = true
   access_key    = var.private_instances_access_key
   private_ip    = "10.0.1.12"
-  security_group_id = [
-    aws_security_group.demo_jenkins_sg.id,
-    aws_security_group.demo_windows_sg.id
-  ]
-}
-
-module "demo_jenkins_replica" {
-  count         = var.ec2_temp_resource ? 1 : 0
-  source        = "../../modules/ec2"
-  instance_name = "demo_jenkins_replica"
-  ami_id        = var.ubuntu_ami_id
-  instance_type = var.instance_type
-  subnet_id     = module.demo_pub_subnet.subnet_id
-  assoc_pub_ip  = true
-  access_key    = var.private_instances_access_key
-  private_ip    = "10.0.1.13"
   security_group_id = [
     aws_security_group.demo_jenkins_sg.id,
     aws_security_group.demo_windows_sg.id
@@ -87,6 +71,38 @@ module "demo_ansible_master" {
   private_ip    = "10.0.32.12"
   security_group_id = [
     aws_security_group.demo_ansible_master_sg.id,
+    aws_security_group.demo_windows_sg.id
+  ]
+}
+
+module "demo_jenkins_replica" {
+  count         = var.ec2_temp_resource ? 1 : 0
+  source        = "../../modules/ec2"
+  instance_name = "demo_jenkins_replica"
+  ami_id        = var.ubuntu_ami_id
+  instance_type = var.instance_type
+  subnet_id     = module.demo_priv_subnet.subnet_id
+  assoc_pub_ip  = false
+  access_key    = var.private_instances_access_key
+  private_ip    = "10.0.32.10"
+  security_group_id = [
+    aws_security_group.demo_jenkins_sg.id,
+    aws_security_group.demo_windows_sg.id
+  ]
+}
+
+module "demo_docker" {
+  count         = var.ec2_temp_resource ? 1 : 0
+  source        = "../../modules/ec2"
+  instance_name = "demo_docker"
+  ami_id        = var.ubuntu_ami_id
+  instance_type = var.instance_type
+  subnet_id     = module.demo_pub_subnet.subnet_id
+  assoc_pub_ip  = true
+  access_key    = var.private_instances_access_key
+  private_ip    = "10.0.1.14"
+  security_group_id = [
+    aws_security_group.demo_http_sg.id,
     aws_security_group.demo_windows_sg.id
   ]
 }

@@ -29,14 +29,16 @@ module "demo_ig" {
 }
 
 module "demo_eip" {
-  source = "../../modules/eip"
-  domain = "vpc"
+  source   = "../../modules/eip"
+  domain   = "vpc"
+  eip_name = "demo_pub_nat_gateway_eip"
 }
 
 module "demo_bastion_eip" {
-  count  = var.perm_resource ? 1 : 0
-  source = "../../modules/eip"
-  domain = "vpc"
+  count    = var.perm_resource ? 1 : 0
+  source   = "../../modules/eip"
+  domain   = "vpc"
+  eip_name = "demo_bastion_eip"
 }
 
 module "demo_bastion_eip_association" {
@@ -47,9 +49,10 @@ module "demo_bastion_eip_association" {
   depends_on    = [module.demo_bastion.instance_id]
 }
 module "demo_jenkins_eip" {
-  count  = var.perm_resource ? 1 : 0
-  source = "../../modules/eip"
-  domain = "vpc"
+  count    = var.perm_resource ? 1 : 0
+  source   = "../../modules/eip"
+  domain   = "vpc"
+  eip_name = "demo_jenkins_eip"
 }
 
 module "demo_jenkins_eip_association" {
