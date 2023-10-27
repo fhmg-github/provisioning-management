@@ -34,7 +34,7 @@ module "demo_jenkins" {
   source        = "../../modules/ec2"
   instance_name = "demo_jenkins_master"
   ami_id        = "ami-0f949d91ce8d26cf5"
-  instance_type = var.instance_type
+  instance_type = var.jenkins_instance_type
   subnet_id     = module.demo_pub_subnet.subnet_id
   assoc_pub_ip  = true
   access_key    = var.private_instances_access_key

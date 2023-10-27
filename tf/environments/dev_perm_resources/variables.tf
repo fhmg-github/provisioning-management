@@ -59,6 +59,11 @@ variable "windows_instance_type" {
   default = "t2.medium"
 }
 
+variable "jenkins_instance_type" {
+  type    = string
+  default = "t2.medium"
+}
+
 variable "bastion_access_key" {
   type    = string
   default = "bastion"
