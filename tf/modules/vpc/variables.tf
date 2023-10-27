@@ -14,10 +14,10 @@ variable "enable_dns_support" {
 }
 
 variable "vpc_name" {
-  type        = string
+  type    = string
   default = "demo_vpc"
 }
 variable "project_name" {
-  type = string
+  type    = string
   default = "demo"
 }

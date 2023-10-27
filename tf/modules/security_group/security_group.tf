@@ -5,7 +5,7 @@ resource "aws_security_group" "sg" {
     create_before_destroy = true
   }
   tags = {
-    "Name" = var.sg_name
+    "Name"    = var.sg_name
     "Project" = var.project_name
   }
 }

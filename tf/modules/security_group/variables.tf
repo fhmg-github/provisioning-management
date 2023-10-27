@@ -1,6 +1,6 @@
 variable "sg_name" {
   type        = string
-  default = "demo_sg_name"
+  default     = "demo_sg_name"
   description = "Give a name to the security group"
 }
 
@@ -37,6 +37,6 @@ variable "type" {
 } */
 
 variable "project_name" {
-  type = string
+  type    = string
   default = "demo"
 }

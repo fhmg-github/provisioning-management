@@ -13,8 +13,9 @@ resource "aws_instance" "ec2" {
   vpc_security_group_ids      = var.security_group_id
   subnet_id                   = var.subnet_id
   private_ip                  = var.private_ip
+  iam_instance_profile        = var.iam_profile
   tags = {
-    "Name" = var.instance_name
+    "Name"    = var.instance_name
     "Project" = var.project_name
   }
 }

@@ -1,5 +1,5 @@
 variable "instance_name" {
-  type = string
+  type    = string
   default = "demo_instance"
 }
 
@@ -33,11 +33,17 @@ variable "subnet_id" {
 }
 
 variable "private_ip" {
-  type = string
+  type     = string
   nullable = true
 }
 
 variable "project_name" {
-  type = string
+  type    = string
   default = "demo"
+}
+
+variable "iam_profile" {
+  type     = string
+  nullable = true
+  default  = null
 }

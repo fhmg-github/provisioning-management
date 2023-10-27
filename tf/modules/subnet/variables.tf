@@ -18,10 +18,10 @@ variable "map_public_ip_on_launch" {
 }
 
 variable "subnet_name" {
-  type        = string
+  type    = string
   default = "demo_subnet"
 }
 variable "project_name" {
-  type = string
+  type    = string
   default = "demo"
 }

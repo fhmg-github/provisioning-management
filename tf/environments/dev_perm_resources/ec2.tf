@@ -7,6 +7,7 @@ module "demo_bastion" {
   subnet_id     = module.demo_pub_subnet.subnet_id
   assoc_pub_ip  = true
   access_key    = var.bastion_access_key
+  iam_profile   = "ec2-ssm"
   private_ip    = "10.0.1.10"
   security_group_id = [
     aws_security_group.demo_pub_sg.id
@@ -32,11 +33,12 @@ module "demo_jenkins" {
   count         = var.ec2_perm_resource ? 1 : 0
   source        = "../../modules/ec2"
   instance_name = "demo_jenkins_master"
-  ami_id        = "ami-05d0edd6a398f10c3"
+  ami_id        = "ami-0f949d91ce8d26cf5"
   instance_type = var.instance_type
   subnet_id     = module.demo_pub_subnet.subnet_id
   assoc_pub_ip  = true
   access_key    = var.private_instances_access_key
+  iam_profile   = "ec2-ssm"
   private_ip    = "10.0.1.12"
   security_group_id = [
     aws_security_group.demo_jenkins_sg.id,
@@ -100,6 +102,7 @@ module "demo_docker" {
   subnet_id     = module.demo_pub_subnet.subnet_id
   assoc_pub_ip  = true
   access_key    = var.private_instances_access_key
+  iam_profile   = "ec2-ssm"
   private_ip    = "10.0.1.14"
   security_group_id = [
     aws_security_group.demo_http_sg.id,
