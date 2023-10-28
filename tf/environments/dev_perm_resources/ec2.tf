@@ -109,35 +109,3 @@ module "demo_docker" {
     aws_security_group.demo_windows_sg.id
   ]
 }
-
-/* module "demo_maven" {
-  count         = var.ec2_temp_resource ? 1 : 0
-  source        = "../../modules/ec2"
-  instance_name = "demo_maven"
-  ami_id        = var.ubuntu_ami_id
-  instance_type = var.instance_type
-  subnet_id     = module.demo_priv_subnet.subnet_id
-  assoc_pub_ip  = false
-  access_key    = var.private_instances_access_key
-  private_ip    = "10.0.32.13"
-  security_group_id = [
-    aws_security_group.demo_maven_sg.id,
-    aws_security_group.demo_windows_sg.id
-  ]
-} */
-
-/* module "demo_jmeter" {
-  count         = var.ec2_temp_resource ? 1 : 0
-  source        = "../../modules/ec2"
-  instance_name = "demo_jmeter"
-  ami_id        = var.ubuntu_ami_id
-  instance_type = var.jmeter_instance_type
-  subnet_id     = module.demo_priv_subnet.subnet_id
-  assoc_pub_ip  = false
-  access_key    = var.private_instances_access_key
-  private_ip    = "10.0.32.14"
-  security_group_id = [
-    aws_security_group.demo_jmeter_sg.id,
-    aws_security_group.demo_windows_sg.id
-  ]
-} */
