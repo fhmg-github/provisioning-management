@@ -137,49 +137,6 @@ resource "aws_security_group" "demo_jenkins_sg" {
   }
 }
 
-/* resource "aws_security_group" "demo_jmeter_sg" {
-  name   = "jmeter_sg"
-  vpc_id = module.demo_vpc.vpc_id
-
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
-    security_groups = [
-      aws_security_group.demo_pub_sg.id,
-      aws_security_group.demo_windows_sg.id
-    ]
-    description = "Allow SSH access from the demo_pub_sg, from windows_sg"
-  }
-
-  ingress {
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
-    cidr_blocks = [var.vpc_cidr_block]
-    security_groups = [
-      aws_security_group.demo_pub_sg.id,
-      aws_security_group.demo_windows_sg.id
-    ]
-    description = "Allow SSH access from the demo_pub_sg, from windows_sg, and anywhere whithing the VPC"
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow all outbound traffic"
-  }
-  lifecycle {
-    create_before_destroy = true
-  }
-  tags = {
-    "Name"    = "demo_jmeter_sg"
-    "Project" = "demo"
-  }
-} */
-
 resource "aws_security_group" "demo_windows_sg" {
   name   = "windows_sg"
   vpc_id = module.demo_vpc.vpc_id
