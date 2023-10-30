@@ -8,6 +8,10 @@ resource "aws_security_group" "egress_sg" {
     protocol    = var.egress_protocol
     cidr_blocks = var.egress_cidr_block
   }
+
+    lifecycle {
+    create_before_destroy = true
+  }
   tags = {
     "Name" = var.egress_sg_name
     "Project" = var.project_name

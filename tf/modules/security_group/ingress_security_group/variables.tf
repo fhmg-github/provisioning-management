@@ -23,17 +23,10 @@ variable "ingress_cidr_block" {
   default = [ ]
 }
 
-/* variable "ingress_security_groups" {
+variable "ingress_security_groups" {
   type = list(string)
   default = [ ]
-} */
-
-variable "ingress_security_groups" {
-  type = string
-}
-
-variable "type" {
-  type = string
+  nullable = true
 }
 
 variable "project_name" {
