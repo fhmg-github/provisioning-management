@@ -18,7 +18,7 @@ output "demo_jenkins_master_public_ip" {
   value = module.demo_jenkins_eip[0].eip_ip
 }
 
-output "demo_jenkins_private_ip" {
+output "demo_jenkins_master_private_ip" {
   value = module.demo_jenkins[0].instance_priv_ip
 }
 
