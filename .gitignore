@@ -17,3 +17,4 @@ errored.tfstate
 tfapply.output
 tfdestroy.output
 tfplan.output
+tfplan.json
