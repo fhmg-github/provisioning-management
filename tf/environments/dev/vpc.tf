@@ -28,12 +28,6 @@ module "demo_ig" {
   vpc_id = module.demo_vpc.vpc_id
 }
 
-module "demo_eip" {
-  source   = "../../modules/eip"
-  domain   = "vpc"
-  eip_name = "demo_pub_nat_gateway_eip"
-}
-
 module "demo_bastion_eip" {
   count    = var.perm_resource ? 1 : 0
   source   = "../../modules/eip"
@@ -63,12 +57,20 @@ module "demo_jenkins_eip_association" {
   depends_on    = [module.demo_jenkins.instance_id]
 }
 
+module "demo_nat_gateway_eip" {
+  count    = var.perm_resource ? 1 : 0
+  source   = "../../modules/eip"
+  domain   = "vpc"
+  eip_name = "demo_pub_nat_gateway_eip"
+}
+
 module "demo_pub_nat_gateway" {
-  count         = var.perm_resource ? 1 : 0
-  source        = "../../modules/nat_gateway/public_nat_gateway"
-  eip_id        = module.demo_eip.eip_id
-  pub_subnet_id = module.demo_pub_subnet.subnet_id
-  depends_on    = [module.demo_eip]
+  count             = var.perm_resource ? 1 : 0
+  source            = "../../modules/nat_gateway/public_nat_gateway"
+  allocation_id     = module.demo_nat_gateway_eip[0].eip_allocation_id
+  pub_subnet_id     = module.demo_pub_subnet.subnet_id
+  depends_on        = [module.demo_nat_gateway_eip]
+  connectivity_type = "public"
 }
 
 module "demo_pub_route_tables" {

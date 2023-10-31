@@ -1,5 +1,6 @@
-variable "eip_id" {
+variable "allocation_id" {
   type = string
+  description = "The Allocation ID of the Elastic IP address for the NAT Gateway. Required for connectivity_type of public."
 }
 variable "pub_subnet_id" {
   type        = string
@@ -12,4 +13,8 @@ variable "nat_gtw_name" {
 variable "project_name" {
   type = string
   default = "demo"
+}
+variable "connectivity_type" {
+  type = string
+  description = "Connectivity type for the NAT Gateway. Valid values are private and public. Defaults to public."
 }

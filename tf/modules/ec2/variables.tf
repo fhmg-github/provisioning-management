@@ -19,7 +19,8 @@ variable "access_key" {
 
 variable "assoc_pub_ip" {
   type        = bool
-  description = "Set to true locally to associate public ip"
+  nullable = true
+  description = "Set to true locally to associate public ip or set to null if attaching a EIP"
 }
 
 variable "security_group_id" {

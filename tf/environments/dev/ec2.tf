@@ -5,7 +5,7 @@ module "demo_bastion" {
   ami_id        = "ami-08c7bd264f2f0f1b5"
   instance_type = var.instance_type
   subnet_id     = module.demo_pub_subnet.subnet_id
-  assoc_pub_ip  = true
+  assoc_pub_ip  = null
   access_key    = var.bastion_access_key
   iam_profile   = "ec2-ssm"
   private_ip    = "10.0.1.10"
@@ -36,7 +36,7 @@ module "demo_jenkins" {
   ami_id        = "ami-0f949d91ce8d26cf5"
   instance_type = var.jenkins_instance_type
   subnet_id     = module.demo_pub_subnet.subnet_id
-  assoc_pub_ip  = true
+  assoc_pub_ip  = null
   access_key    = var.private_instances_access_key
   iam_profile   = "ec2-ssm"
   private_ip    = "10.0.1.12"
